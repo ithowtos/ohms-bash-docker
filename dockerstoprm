@@ -1,0 +1,14 @@
+#!/bin/bash
+
+name=`readarg $1`
+
+usage $0 'name' "$name" || exit 1
+
+function _process {
+	osudo docker stop $name && \
+	osudo docker rm $name
+
+}
+
+_process
+

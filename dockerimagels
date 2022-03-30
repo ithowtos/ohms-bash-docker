@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function _process {
+	olog Docker images…
+	osudo docker image ls || errexit "$0 unable" || exit 1
+}
+
+_process
+

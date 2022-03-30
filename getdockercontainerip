@@ -1,0 +1,12 @@
+#!/bin/bash
+
+dn=`readarg $1`
+
+usage $0 'docker-name' "$dn" || exit 1
+
+function _process {
+	`command -v sudo` docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $dn
+}
+
+_process
+

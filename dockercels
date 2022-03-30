@@ -1,0 +1,9 @@
+#!/bin/bash
+
+function _process {
+	olog Docker containers that exist…
+	osudo docker ps -a || errexit "$0 Unable" || exit 1
+}
+
+_process
+

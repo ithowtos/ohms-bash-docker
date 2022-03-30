@@ -1,0 +1,24 @@
+#!/bin/bash
+
+function _line {
+	screenline
+}
+
+function _process {
+	oin docker -v || exit 1
+	osudonull || errexit "$0 Bad permissions" || exit 1
+	_line 
+	dockerimagels
+	_line
+	dockercels
+	_line
+	olog Docker containers that are running…
+	osudo docker container list
+	_line
+	olog Docker Hosts…
+	dockerhosts
+	_line
+}
+
+_process
+

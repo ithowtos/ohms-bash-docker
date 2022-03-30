@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function _process {
+	for i in `osudo docker container list -q `; do 
+		echo `getdockercontainerip $i` $i `\
+		osudo docker container list | grep $i | rev | tr -s [:space:] | cut -d' ' -f1 | rev`  
+	done
+}
+
+_process
+

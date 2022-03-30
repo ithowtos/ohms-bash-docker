@@ -1,0 +1,15 @@
+#!/bin/bash
+
+nam=$1
+image=$2
+comm=$3
+
+usage $0 'name image [command]' "$image" || exit 1
+
+function _process {
+	osudo docker run --name ${nam} -td ${image} ${comm} || errexit "$0 unable to run container $nam $image $comm" || exit 1
+
+}
+
+_process
+

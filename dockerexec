@@ -1,0 +1,15 @@
+#!/bin/bash
+
+stuff=( `readarg ${*}` )
+
+nam=${stuff[0]}
+comm="${stuff[@]:1}"
+
+usage $0 'name command' "$comm" || exit 1
+
+function _process {
+	osudo docker exec -it $nam $comm || exit 1
+}
+
+_process
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+name=`readarg $1`
+usage $0 'container-name' "$name" || exit 1
+
+function _process {
+	osudo docker start $name || \
+		errexit "$0 Error: Unable to start $name container" || exit 1
+}
+
+_process || exit 1
+
