@@ -5,7 +5,8 @@ function _line {
 }
 
 function _process {
-	oin docker -v || exit 1
+	#oin docker -v || exit 1
+	ocommand docker -v || errexit "$0 - docker does not exist on this machine" || exit 1
 	osudonull || errexit "$0 Bad permissions" || exit 1
 	_line 
 	dockerimagels
