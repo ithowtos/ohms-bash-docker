@@ -1,0 +1,57 @@
+#!/bin/bash
+
+function _usage {
+	usage $0 '-n name -f mnt-folder -c c-folder -i image' "$1" || exit 1
+}
+
+function _params {
+	_usage $1 || exit 1
+	k=1
+    for i in ${*} ; do
+	iseven $k && \
+		value=$i || 
+		key=$i 
+
+	k=$((( k+1 )))
+
+	case "${key}" in
+        -n)
+	    name=${value}
+		continue
+            ;;
+         
+        -f)
+	    folder=${value}
+		continue
+            ;;
+	-c)
+	    cfolder=${value}
+		continue
+            ;;	
+	-i)
+	    img=${value}
+		continue
+            ;;	
+        *)
+	    other="${other} ${i}"
+		continue
+	    ;;
+ 
+	esac
+     done
+	for j in name folder ; do
+		[ "${!j}" ] || errexit "$0 Bad ${j}" || _usage || exit 1
+	done
+	
+}
+
+function _process {
+	fol=$folder
+	dockerrunningexists $name && \
+	[ -e $fol ] || osudo mkdir -p $fol && \
+	dn=$img
+	osudo docker run --name $name ${other} -v ${fol}:${cfolder}:rw -d $dn
+}
+
+_params ${*} && _process || exit 1
+
